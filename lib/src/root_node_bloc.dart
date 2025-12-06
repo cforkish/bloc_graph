@@ -3,10 +3,10 @@ part of 'graph_node_bloc.dart';
 class RootNodeBloc<T extends RootNode, Data>
     extends ParentNodeBloc<T, Data, RootNodeLoaded<T, Data>> {
   RootNodeBloc({
+    required super.initialNode,
     required super.nodeStream,
     required super.dataStream,
     required super.childNodesStream,
-    required super.initialNode,
     required super.childNodeBlocBuilder,
   });
 

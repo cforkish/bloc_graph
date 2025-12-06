@@ -4,10 +4,15 @@ class LeafNodeBloc<T extends LeafNode, Data>
     extends ChildNodeBloc<T, Data, LeafNodeLoaded<T, Data>> {
   LeafNodeBloc({
     required super.initialNode,
-    required super.nodeStream,
-    required super.dataStream,
     required super.parent,
+    required this.nodeStream,
+    required this.dataStream,
   });
+
+  @override
+  final Stream<T?> nodeStream;
+  @override
+  final Stream<Data?> dataStream;
 
   @override
   LeafNodeLoaded<T, Data> loadedStateFromCombinedSnapshot<C extends NodeDataSnapshot<T, Data>>(

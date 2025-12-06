@@ -8,21 +8,22 @@ abstract class ParentNodeBloc<T extends ParentNode, Data, S extends ParentNodeLo
     with ParentNodeBlocMixin<T, Data, S> {
   ParentNodeBloc({
     required super.initialNode,
-    required super.nodeStream,
-    required super.dataStream,
+    required this.nodeStream,
+    required this.dataStream,
     required this.childNodesStream,
     required this.childNodeBlocBuilder,
   }) {
     on<GraphNodeChildrenUpdated>(_onChildrenUpdated);
   }
 
-  @protected
-  final Stream<List<ChildNode>> childNodesStream;
+  @override
+  final Stream<T?> nodeStream;
+  @override
+  final Stream<Data?> dataStream;
 
-  @protected
+  final Stream<List<ChildNode>> childNodesStream;
   final ChildNodeBlocBuilder childNodeBlocBuilder;
 
-  @protected
   late final StreamSubscription<List<ChildNode>> childrenSubscription;
 
   @override
@@ -131,12 +132,7 @@ mixin ChildNodeBlocMixin<T extends ChildNode, Data, S extends GraphNodeLoaded<T,
 abstract class ChildNodeBloc<T extends ChildNode, Data, S extends GraphNodeLoaded<T, Data>>
     extends GraphNodeBloc<T, Data, S>
     with ChildNodeBlocMixin<T, Data, S> {
-  ChildNodeBloc({
-    required super.initialNode,
-    required super.nodeStream,
-    required super.dataStream,
-    required this.parent,
-  });
+  ChildNodeBloc({required super.initialNode, required this.parent});
 
   @override
   final ParentNodeBloc parent;
@@ -148,14 +144,15 @@ abstract class ParentChildNodeBloc<
   S extends ParentNodeLoaded<T, Data>
 >
     extends ParentNodeBloc<T, Data, S>
-    with ChildNodeBlocMixin<T, Data, S> {
+    with ChildNodeBlocMixin<T, Data, S>
+    implements ChildNodeBloc<T, Data, S> {
   ParentChildNodeBloc({
     required super.initialNode,
-    required this.parent,
     required super.nodeStream,
     required super.dataStream,
     required super.childNodesStream,
     required super.childNodeBlocBuilder,
+    required this.parent,
   });
 
   @override

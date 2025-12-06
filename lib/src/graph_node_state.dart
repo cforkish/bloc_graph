@@ -1,6 +1,6 @@
 part of 'graph_node_bloc.dart';
 
-abstract class GraphNodeState<T extends GraphNode, Data> extends Equatable {
+sealed class GraphNodeState<T extends GraphNode, Data> extends Equatable {
   const GraphNodeState({required this.node});
   final T node;
 
@@ -8,11 +8,11 @@ abstract class GraphNodeState<T extends GraphNode, Data> extends Equatable {
   List<Object?> get props => [node];
 }
 
-class GraphNodeInitial<T extends GraphNode, Data> extends GraphNodeState<T, Data> {
+final class GraphNodeInitial<T extends GraphNode, Data> extends GraphNodeState<T, Data> {
   const GraphNodeInitial({required super.node});
 }
 
-class GraphNodeLoading<T extends GraphNode, Data> extends GraphNodeState<T, Data> {
+final class GraphNodeLoading<T extends GraphNode, Data> extends GraphNodeState<T, Data> {
   const GraphNodeLoading({required super.node});
 }
 
@@ -40,7 +40,7 @@ abstract class ParentNodeLoaded<T extends ParentNode, Data> extends GraphNodeLoa
   List<Object?> get props => [...super.props, children];
 }
 
-class GraphNodeError<T extends GraphNode, Data> extends GraphNodeState<T, Data> {
+final class GraphNodeError<T extends GraphNode, Data> extends GraphNodeState<T, Data> {
   const GraphNodeError({required super.node, required this.error});
   final Object error;
 

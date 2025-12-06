@@ -19,8 +19,7 @@ part 'util.dart';
 
 abstract class GraphNodeBloc<T extends GraphNode, Data, S extends GraphNodeLoaded<T, Data>>
     extends Bloc<GraphNodeEvent, GraphNodeState<T, Data>> {
-  GraphNodeBloc({required this.initialNode, required this.nodeStream, required this.dataStream})
-    : super(GraphNodeInitial(node: initialNode)) {
+  GraphNodeBloc({required this.initialNode}) : super(GraphNodeInitial(node: initialNode)) {
     on<GraphNodeLoadRequested>(_load);
     on<GraphNodeReloadRequested>(_reload);
     on<GraphNodeNodeUpdated>(_onNodeUpdated);
@@ -29,9 +28,9 @@ abstract class GraphNodeBloc<T extends GraphNode, Data, S extends GraphNodeLoade
 
   final T initialNode;
   @protected
-  final Stream<T?> nodeStream;
+  Stream<T?> get nodeStream;
   @protected
-  final Stream<Data?> dataStream;
+  Stream<Data?> get dataStream;
 
   @protected
   List<Stream<dynamic>> get subStreams => [nodeStream, dataStream];

@@ -26,6 +26,9 @@ abstract class ParentChildNode implements ParentNode, ChildNode {}
 class RootNode extends GraphNode implements ParentNode {
   const RootNode({required super.id, required super.nodePathSegment})
     : super(nodePath: nodePathSegment);
+
+  @override
+  String get nodePath => nodePathSegment;
 }
 
 class TrunkNode extends ChildNode implements ParentChildNode {
